@@ -44,7 +44,7 @@ class StoreProjectRequst extends FormRequest
             'close.required' => 'The :attribute field must be required',
             'close.date' => 'The :attribute must be a valid date format',
             'image.required' => 'The :attribute must be required',
-             'image.image' => 'The :attribute must be a valid image with :mimes format.',
+             'image.mimes' => 'The :attribute must be a valid image with :mimes format.',
 
         ];
     }

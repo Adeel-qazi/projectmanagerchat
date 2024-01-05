@@ -13,7 +13,7 @@
                     <a href="index-2.html">
                         <i data-feather="home"></i></a>
                 </li>
-                <li class="breadcrumb-item active">Dashboard</li>
+                {{-- <li class="breadcrumb-item active">Admin</li> --}}
             </ul>
             <div class="row ">
                 <div class="col-xl-6 col-lg-6">
@@ -21,16 +21,11 @@
                         <div class="card-statistic-3">
                             <div class="card-icon card-icon-large"><i class="fa fa-award"></i></div>
                             <div class="card-content">
-                                <h4 class="card-title">Manager</h4>
-                                <span>524</span>
-                                <div class="progress mt-1 mb-1" data-height="8">
-                                    <div class="progress-bar l-bg-purple" role="progressbar" data-width="25%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mb-0 text-sm">
-                                    <span class="mr-2"><i class="fa fa-arrow-up"></i> 10%</span>
-                                    <span class="text-nowrap">Since last month</span>
-                                </p>
+                            
+                                <h4 class="card-title">Managers</h4>
+                                @if (!empty($managers))
+                                        <span>{{ $managers->count() }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -40,16 +35,10 @@
                         <div class="card-statistic-3">
                             <div class="card-icon card-icon-large"><i class="fa fa-briefcase"></i></div>
                             <div class="card-content">
-                                <h4 class="card-title">Project</h4>
-                                <span>1,258</span>
-                                <div class="progress mt-1 mb-1" data-height="8">
-                                    <div class="progress-bar l-bg-orange" role="progressbar" data-width="25%"
-                                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <p class="mb-0 text-sm">
-                                    <span class="mr-2"><i class="fa fa-arrow-up"></i> 10%</span>
-                                    <span class="text-nowrap">Since last month</span>
-                                </p>
+                                <h4 class="card-title">Projects</h4>
+                                @if (!empty($projects))
+                                        <span>{{ $projects->count() }}</span>
+                                @endif
                             </div>
                         </div>
                     </div>

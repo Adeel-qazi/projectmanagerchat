@@ -34,7 +34,7 @@ Route::group(['prefix'=>'admin'],function(){
         Route::get('/dashboard',[UserController::class,'index'])->name('dashboard');
         Route::get('/logout',[UserController::class,'logout'])->name('logout');
         Route::get('/profile/{userId}',[UserController::class,'profile'])->name('profile');
-        Route::post('/profile/{userId}',[UserController::class,'profileUpdate'])->name('update.profile');
+        Route::put('/profile/{userId}',[UserController::class,'profileUpdate'])->name('update.profile');
 
         //manager
         Route::resource('managers',ManagerController::class);

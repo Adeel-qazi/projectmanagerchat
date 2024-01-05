@@ -4,23 +4,12 @@
 @section('content')
 <div class="main-content">
     <section class="section">
-      <ul class="breadcrumb breadcrumb-style ">
-        <li class="breadcrumb-item">
-          <h4 class="page-title m-b-0">Form</h4>
-        </li>
-        <li class="breadcrumb-item">
-          <a href="index-2.html">
-            <i data-feather="home"></i></a>
-        </li>
-        <li class="breadcrumb-item">Forms</li>
-        <li class="breadcrumb-item">Basic Form</li>
-      </ul>
       <div class="section-body">
         <div class="row">
           <div class="col-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                  <h4>create </h4>
+                  <h4>Create Manager</h4>
                 </div>
                 <div class="card-body">
                     <form action="{{route('managers.store')}}" method="post" name="" id="" enctype="multipart/form-data">

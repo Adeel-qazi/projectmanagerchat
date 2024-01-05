@@ -57,7 +57,8 @@
                           @foreach ($messages as $message)
                           
                          <div class="row mt-2">
-                          @if ($message->manager_id == auth('manager')->user()->id)
+                          @if (auth('manager')->check() && ($message->manager_id == auth('manager')->user()->id || auth('admin')->check()))
+                          {{-- @if ($message->manager_id == auth('manager')->user()->id || auth('admin')->check()) --}}
                           <div class="offset-md-6 col-md-6 message right" style="border: 1px solid white; background-color:white;">
                             <span style="padding: 2px; margin:20px; background-color:white; color:black">{{ $message->content }}</span>
                             <span style="font-size: 10px; margin-left:250px;">{{ date_format($message->created_at,'h:m:s A') }}</span>
@@ -69,8 +70,8 @@
                               <img src="{{asset("images/manager/".$message->manager->image)}}" style="width: 40px;">
                                </div>
                                <div class="col-md-11">
-                                 <p><strong>{{ $message->manager->name." " }}</strong>{{$message->manager->email}}</p>
-                                 <span>{{ $message->content }}</span>
+                                 <p><strong style="margin-left:10px;">{{ $message->manager->name." " }}</strong>{{$message->manager->email}}</p>
+                                 <span style="font-size: 20px; margin-left:80px;">{{ $message->content }}</span>
                                  <span style="font-size: 10px; margin-left:250px;">{{ date_format($message->created_at,'h:m:s A') }}</span>
                                </div>
                           </div>
@@ -83,6 +84,8 @@
 
                         </div>
                         <div class="card-footer chat-form">
+                          @if (!auth('admin')->check())
+                              
                           <form action="{{ route('message', $project->id) }}" method="post" enctype="multipart/form-data" id="chat-form">
                             @csrf
                         
@@ -117,6 +120,8 @@
                                 </button>
                             </div>
                         </form>
+                        @endif
+
                         
                         
                         </div>

@@ -4,17 +4,13 @@
 @section('content')
 <div class="main-content">
     <section class="section">
-      <ul class="breadcrumb breadcrumb-style ">
-        <li class="breadcrumb-item">
-          <h4 class="page-title m-b-0">Advance Table</h4>
-        </li>
-      </ul>
+     
       <div class="section-body">
         <div class="row">
           <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h1>Managers</h1>
+                    <h1>Managers Table</h1>
                 </div>
                 <div class="card-body">
                          <a href="{{route('managers.create')}}"><button class="btn btn-primary">Create</button></a>       
@@ -23,7 +19,6 @@
                 <div class="table-responsive">
                   <table class="table table-bordered table-md">
                     <tr>
-                      <th>#</th>
                       <th>Name</th>
                       <th>Email</th>
                       <th>Action</th>
@@ -31,17 +26,24 @@
                     @if (!empty($managers))
                     @foreach ($managers as $manager)
                     <tr>
-                        <td>{{$manager->id}}</td>
                         <td>{{$manager->name}}</td>
                         <td>{{$manager->email}}</td>
                         <td style="display: flex;">
-                            <a href="{{route('managers.edit',$manager->id)}}"><button class="btn btn-secondary">Edit</button></a>
-                            <form action="{{route('managers.destroy',$manager->id)}}" method="post" onsubmit="return confirm('Are you sure You want to delete this manager')">
-                              @csrf
-                              @method('DELETE')  
-                              <button class="btn btn-danger">Delete</button>
-                            </form>
-                          </td>
+                          <a href="{{ route('managers.edit', $manager->id) }}" style="text-decoration: none;">
+                              <button style="background-color: #FFD700; border: none; padding: 5px; margin-right: 5px;" title="Edit Manager">
+                                  <i style="color: white;" class="fas fa-edit"></i> 
+                              </button>
+                          </a>
+                      
+                            <form id="deleteForm{{ $manager->id }}" action="{{ route('managers.destroy', $manager->id) }}" method="post">
+                            @csrf
+                            @method('DELETE')  
+                            <button type="button" onclick="confirmDelete({{ $manager->id }})" style="background-color: #DC143C; border: none; padding: 5px;" title="Delete Manager">
+                                <i style="color: white;" class="fas fa-trash-alt"></i> 
+                            </button>
+                        </form>
+                      </td>
+                      
                      </tr>
                     @endforeach
                     @endif
@@ -77,3 +79,25 @@
  
     
 @endsection
+
+
+@push('customJs')
+<script>
+  function confirmDelete(managerId) {
+      Swal.fire({
+          title: 'Are you sure?',
+          text: 'You want to delete this manager',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#DC143C',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Yes, delete it!',
+          width: '30%',
+      }).then((result) => {
+          if (result.isConfirmed) {
+              document.getElementById('deleteForm' + managerId).submit();
+          }
+      });
+  }
+</script>
+@endpush

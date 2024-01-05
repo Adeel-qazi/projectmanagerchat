@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Gati - Admin Dashboard Template</title>
+  <title>Admin Dashboard</title>
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('assets/css/app.min.css')}}">
   <!-- Template CSS -->
@@ -16,6 +16,9 @@
   <!-- Custom style CSS -->
   <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
   <link rel='shortcut icon' type='image/x-icon' href="{{asset('assets/img/favicon.ico')}}" />
+
+  
+  
 </head>
 
 <body>
@@ -29,46 +32,10 @@
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg collapse-btn"> 
                 <i data-feather="menu"></i></a></li>
             <li>
-              <form class="form-inline mr-auto">
-                <div class="search-element">
-                  <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="200">
-                  <button class="btn" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
             </li>
           </ul>
         </div>
         <ul class="navbar-nav navbar-right">
-          <li><a href="#" class="nav-link nav-link-lg fullscreen-btn">
-              <i data-feather="maximize"></i>
-            </a></li>
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-              class="nav-link nav-link-lg message-toggle"><i data-feather="mail" class="mailAnim"></i>
-              <span class="badge headerBadge1">
-              </span> </a>
-              <!-- message start -->
-            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-              <div class="dropdown-header">
-                Messages
-              </div>
-            </div>
-              <!-- message end -->
-
-          </li>
-           <!-- notification start -->
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown"
-              class="nav-link notification-toggle nav-link-lg"><i data-feather="bell"></i>
-            </a>
-            <div class="dropdown-menu dropdown-list dropdown-menu-right pullDown">
-              <div class="dropdown-header">
-                Notifications
-              </div>
-            </div>
-          </li>
-             <!-- notification end -->
-
              <!-- menu start -->
           <li class="dropdown"><a href="#" data-toggle="dropdown"
               class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="{{asset('assets/img/user.png')}}"
@@ -79,10 +46,6 @@
               </div>
               <a href="{{ route('profile', (auth('admin')->user() ? auth('admin')->user()->id : (auth('manager')->user() ? auth('manager')->user()->id : null))) }}" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile
-              </a><a href="timeline.html" class="dropdown-item has-icon"> <i class="fas fa-bolt"></i>
-                Activities
-              </a> <a href="#" class="dropdown-item has-icon"> <i class="fas fa-cog"></i>
-                Settings
               </a>
               <div class="dropdown-divider"></div>
               <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
@@ -207,6 +170,8 @@
   <script src="{{asset('assets/js/scripts.js')}}"></script>
   <!-- Custom JS File -->
   <script src="{{asset('assets/js/custom.js')}}"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
   @stack('customJs')
 </body>

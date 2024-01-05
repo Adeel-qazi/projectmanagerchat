@@ -5,19 +5,13 @@
 <div class="main-content">
     <section class="section">
         @if (!empty($user))
-            
-              <ul class="breadcrumb breadcrumb-style ">
-                <li class="breadcrumb-item">
-                  <h4 class="page-title m-b-0">Profile</h4>
-                </li>
-              </ul>
               <div class="section-body">
                 <div class="row mt-sm-4">
                 
                   <div class="col-12 col-md-12 col-lg-12">
-                    <div class="card">
-                      <div class="padding-20">
-                        <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                    {{-- <div class="card"> --}}
+                      {{-- <div class="padding-20"> --}}
+                        {{-- <ul class="nav nav-tabs" id="myTab2" role="tablist">
                           <li class="nav-item">
                             <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
                               aria-selected="true">About</a>
@@ -26,9 +20,9 @@
                             <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
                               aria-selected="false">Setting</a>
                           </li>
-                        </ul>
-                        <div class="tab-content tab-bordered" id="myTab3Content">
-                          <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
+                        </ul> --}}
+                        {{-- <div class="tab-content tab-bordered" id="myTab3Content"> --}}
+                          {{-- <div class="tab-pane fade show active" id="about" role="tabpanel" aria-labelledby="home-tab2">
                             <div class="row">
                               <div class="col-md-3 col-6 b-r">
                                 <strong>Full Name</strong>
@@ -65,47 +59,81 @@
                               specimen book. It has survived not only five centuries, but also the
                               leap
                               into electronic typesetting, remaining essentially unchanged.</p>
-                          </div>
-                          <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2">
-                            <form method="post" action="{{route('update.profile',$user->id)}}" class="needs-validation">
+                          </div> --}}
+
+
+                          {{-- <div class="tab-pane fade" id="settings" role="tabpanel" aria-labelledby="profile-tab2"> --}}
+                            <form method="post" action="{{route('update.profile',$user->id)}}" enctype="multipart/form-data" class="needs-validation">
                                 @csrf
+                                @method('PUT')
                               <div class="card-header">
                                 <h4>Edit Profile</h4>
                               </div>
-                              <div class="card-body">
+                              <div class="container-fluid">
                                 <div class="row">
                                   <div class="form-group col-md-6 col-12">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" name="name" value="{{$user->name}}">
-                                    <div class="invalid-feedback">
-                                      Please fill in the first name
-                                    </div>
+                                      <label for="name">First Name</label>
+                                      <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                                      @error('name')
+                                          <div class="alert alert-danger">{{ $message }}</div>
+                                      @enderror
                                   </div>
-                                </div>
-                                @error('name')
+                              
+                                  <div class="form-group col-md-6 col-12">
+                                      <label for="email">Email</label>
+                                      <input type="email" class="form-control" name="email" value="{{ $user->email }}">
+                                      @error('email')
+                                          <div class="alert alert-danger">{{ $message }}</div>
+                                      @enderror
+                                  </div>
+                              
+                                  <div class="form-group col-md-6 col-12">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password"  class="@error('password') is-invalid @enderror form-control">
+                                    @error('password')
                                     <div class="alert alert-danger">{{$message}}</div>
                                 @enderror
-                                <div class="row">
-                                  <div class="form-group col-md-7 col-12">
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" name="email" value="{{$user->email}}">
-                                    <div class="invalid-feedback">
-                                      Please fill in the email
-                                    </div>
+                                  </div>
+                              
+                                  <div class="form-group col-md-6 col-12">
+                                    <label for="password">Password Confirmation</label>
+                                    <input type="password" name="password_confirmation" id="password"  class="@error('password_confirmation') is-invalid @enderror form-control">
+                                    @error('password_confirmation')
+                                    <div class="alert alert-danger">{{$message}}</div>
+                                @enderror
+                                  </div>
+                              </div>
+                              @if (auth('manager')->check())
+                              <div class="form-group col-md-6 col-12">
+                                <div class="mb-3">
+                                    <label for="image">Image</label>
+                                   <input type="file" name="image" id="image" class="@error('image') is-invalid @enderror form-control" placeholder="Enter The Image">
+                                   {{-- @dd($user) --}}
+                                   @if (!empty($user->image))
+                                   <div class="mb-3">
+                                   <img src="{{asset('images/manager/'.$user->image)}}"  alt="current-image" style="max-width: 100%;">
+                                   <input type="hidden" name="existingImage" id="existingImage" value="{{$user->image}}" >
+                                   </div>
+                                   @endif
+                                   @error('image')
+                                   <div class="alert alert-danger">{{$message}}</div>
+                               @enderror
                                 </div>
+                               </div>
+                              @endif
+                              
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <button type="submit" class="btn btn-primary">Update Profile</button>
+                                </div>
+                              </div>
                             </div>
-                            @error('email')
-                            <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                              </div>
-                              <div class="card-footer text-right">
-                                <button type="submit" class="btn btn-primary">Update Profile</button>
-                              </div>
+
                             </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                          {{-- </div> --}}
+                        {{-- </div>. --}}
+                      {{-- </div>, --}}
+                    {{-- </div> --}}
                   </div>
                 </div>
               </div>

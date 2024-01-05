@@ -13,14 +13,14 @@
         <div class="sidebar-user-details">
           <div class="user-name">{{ (auth('admin')->user() ? auth('admin')->user()->name : (auth('manager')->user() ? auth('manager')->user()->name : 'Guest')) }}</div>
           <div class="user-role">{{ (auth('admin')->user() ? 'Admin' : (auth('manager')->user() ? 'Manager' : '')) }}</div>
-          <div class="sidebar-userpic-btn d-flex">
-            <a href="{{ route('profile', (auth('admin')->user() ? auth('admin')->user()->id : (auth('manager')->user() ? auth('manager')->user()->id : null))) }}" class="dropdown-item has-icon">
+          {{-- <div class="sidebar-userpic-btn d-flex"> --}}
+            {{-- <a href="{{ route('profile', (auth('admin')->user() ? auth('admin')->user()->id : (auth('manager')->user() ? auth('manager')->user()->id : null))) }}" class="dropdown-item has-icon">
               <i class="far fa-user"></i> Profile
-            </a>
-            <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
+            </a> --}}
+            {{-- <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
               <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </div>
+            </a> --}}
+          {{-- </div> --}}
         </div>
       </div>
 

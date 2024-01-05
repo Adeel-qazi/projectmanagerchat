@@ -32,8 +32,8 @@ class ProjectController extends Controller
      public function create()
      {
         // $this->authorize('create',Project::class);//right
-       
-         return view('admin.project.create');
+        $managers = Manager::all();
+         return view('admin.project.create',compact('managers'));
      }
  
      /**
@@ -41,21 +41,20 @@ class ProjectController extends Controller
       */
      public function store(StoreProjectRequst $request)
      {
-
          $validatedData = $request->validated();
-         
          if(!empty($validatedData)){
-
-             if(auth('manager')->check()){
-                 $manager = auth('manager')->user();
-                }
+            if (auth('manager')->check()) {
+                $validatedData['manager_id'] = auth('manager')->user()->id;
+            } else{
+                $validatedData['manager_id'] = auth('admin')->check() ? $request->manager_id : null;
+            }
                 if(!empty($request->hasFile('image'))){
                     $image = $request->file('image');
                     $imageName = time().".".$image->getClientOriginalExtension();
                     $image->move(public_path("images/project/"),$imageName);
                     $validatedData['image'] = $imageName;
                 }
-                $manager->projects()->create($validatedData);
+                Project::create($validatedData);
               flash()->addSuccess('Successfully added the project');
               return redirect()->route('projects.index');
          }
@@ -76,8 +75,9 @@ class ProjectController extends Controller
      {
         $project = Project::findOrFail($id);
         // $this->authorize('update',Project::class);//right
+        $managers = Manager::all();
 
-        return view("admin.project.edit",compact('project'));
+        return view("admin.project.edit",compact('project','managers'));
     }
     
     /**
@@ -85,15 +85,15 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequst $request, string $id)
     {
-       
         $Project = Project::findOrFail($id);
-        
         
         $validatedData = $request->validated();
         if(!empty($validatedData)){
             if(auth('manager')->check()){
                 $manager = auth('manager')->user();
                 $validatedData['manager_id'] = $manager->id;
+            }else{
+                $validatedData['manager_id'] = auth('admin')->check() ? $request->manager_id : null;
             }
             if(!empty($request->hasFile('image'))){
                 $image = $request->file('image');

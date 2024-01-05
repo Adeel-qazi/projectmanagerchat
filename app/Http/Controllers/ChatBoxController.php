@@ -35,7 +35,7 @@ class ChatBoxController extends Controller
     //     dd("fix");
 
         $project = Project::findOrFail($projectId);
-        $managerId = auth('manager')->user()->id;
+        // $managerId = auth('manager')->user()->id;
         $messages = Message::with('manager')->orderBy('id', 'ASC')->get();
 
         return view('admin.chat', compact('messages', 'project'));

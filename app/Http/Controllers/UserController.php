@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminLoginRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Models\Manager;
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -48,14 +50,21 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('admin.dashboard');
+        $managers = Manager::all();
+        $projects = Project::all();
+        return view('admin.dashboard',compact('managers','projects'));
     }
 
 
     public function profile($userId)
     {
 
-      $user =  User::findOrFail($userId);
+        if(auth('admin')->check()){
+
+            $user =  User::findOrFail($userId);
+        }else{
+            $user =  Manager::findOrFail($userId);
+        }
 
       return view('admin.profile',compact('user'));
     }
@@ -64,11 +73,27 @@ class UserController extends Controller
     public function profileUpdate(UpdateProfileRequest $request,$userId)
     {
         $validatedData = $request->validated();
-      $user =  User::findOrFail($userId);
+
+        if(auth('admin')->check()){
+
+            $user =  User::findOrFail($userId);
+        }else{
+            $user =  Manager::findOrFail($userId);
+
+            if(!empty($request->hasFile('image'))){
+                $image = $request->file('image');
+                $imageName = time().".".$image->getClientOriginalExtension();
+                $image->move(public_path("images/manager/"),$imageName);
+    
+                $validatedData['image'] = $imageName;
+            }else{
+                $validatedData['image'] = $request->existingImage;
+    
+            }
+        }
      $user->update($validatedData);
+     flash()->addSuccess('Successfully updated the profile');
      return redirect()->route('profile',$user->id);
-
-
     }
 
 
